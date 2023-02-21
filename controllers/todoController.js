@@ -37,21 +37,7 @@ async function getById(req, res, next){
 // create one new todo
 async function createOne(req, res, next){
     try{
-        const name = req.body.name;
-        const description = req.body.description;
-        const completed = req.body.completed;
-        const dateCreated = req.body.dateCreated;
-        const dateCompleted = req.body.dateCompleted;
-        const status = req.body.status;
-        const newTodo = new list({
-            name,
-            description,
-            completed,
-            dateCreated,
-            dateCompleted,
-            status
-        });
-        const savedData = await newTodo.save();
+        const savedData = await list.create(req.body);
         res.json({
             success: true,
             todo: savedData
@@ -104,21 +90,7 @@ async function createMulti(req, res, next){
     try{
         const savedDataArr = [];
         for(let i = 0; i < req.body.length; i++){
-            const name = req.body[i].name;
-            const description = req.body[i].description;
-            const completed = req.body[i].completed;
-            const dateCreated = req.body[i].dateCreated;
-            const dateCompleted = req.body[i].dateCompleted;
-            const status = req.body[i].status;
-            const newTodo = new list({
-                name,
-                description,
-                completed,
-                dateCreated,
-                dateCompleted,
-                status
-            });
-            const savedData = await newTodo.save();
+            const savedData = await list.create(req.body[i]);
             savedDataArr.push(savedData);
         }
         res.json({
